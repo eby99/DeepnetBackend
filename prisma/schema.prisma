@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db { 
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Menu {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  description String
+  items       MenuItem[]
+}
+
+model MenuItem {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  description String
+  price       Float
+  menu        Menu     @relation(fields: [menuId], references: [id])
+  menuId      String
+}
